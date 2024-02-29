@@ -5,13 +5,13 @@ import MongoStore from "connect-mongo";
 import { Server } from "socket.io";
 import cors from "cors";
 import __dirname from "./utils.js";
-import productRouter from "./routes/products.routes.js";
 import cartRouter from "./routes/carts.routes.js";
-import viewsRouter from "./routes/views.routes.js";
-import userViewRouter from "./routes/users.views.routes.js";
-import messageDao from "./services/db/message.service.js";
+import {createMessage} from "./services/db/message.service.js";
 import githubLoginRouter from "./routes/github-login.views.routes.js"
 import UserExtendRouter from "./routes/custom/users.extend.routes.js";
+import ProductExtendRouter from "./routes/custom/products.extend.routes.js";
+import MessageExtendRouter from "./routes/custom/message.extend.routes.js";
+import CartExtendRouter from "./routes/custom/cart.extend.routes.js";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import cookieParser from "cookie-parser";
@@ -64,7 +64,12 @@ const mongoInstance = async () => {
 mongoInstance();
 
 // Configuración de Socket.IO
-const io = new Server(httpServer);
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"]
+  }
+});
 io.on('connection', (socket) => {
   console.log("A user connected");
 
@@ -74,7 +79,8 @@ io.on('connection', (socket) => {
 
   socket.on('chat message', async (data) => {
     try {
-      await messageDao.createMessage(data.user, data.content);
+      console.log(data)
+      await createMessage(data.user, data.message);
       io.emit('chat message', data);
     } catch (error) {
       console.error(error);
@@ -117,12 +123,15 @@ app.set("views", `${__dirname}/views`);
 app.use(express.static(`${__dirname}/public`));
 
 // Rutas
-app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
-app.use("/users", userViewRouter);
 app.use("/github", githubLoginRouter);
-app.use("/", viewsRouter);
 
 // Custom Router
 const userExtendRouter = new UserExtendRouter();
 app.use("/api/extend/users", userExtendRouter.getRouter());
+const productExtendRouter = new ProductExtendRouter();
+app.use("/api/extend/products", productExtendRouter.getRouter());
+const messageExtendRouter = new MessageExtendRouter();
+app.use("/api/extend/messages", messageExtendRouter.getRouter());
+const cartExtendRouter = new CartExtendRouter();
+app.use("api/extend/carts", cartExtendRouter.getRouter());

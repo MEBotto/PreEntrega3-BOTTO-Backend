@@ -13,7 +13,7 @@ const ProductsListContainer = ({ theme }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/products?limit=${limit}&page=${page}`);
+        const response = await fetch(`http://localhost:8080/api/extend/products?limit=${limit}&page=${page}`);
         if (!response.ok) {
           throw new Error('Error al obtener los datos');
         }
@@ -22,7 +22,6 @@ const ProductsListContainer = ({ theme }) => {
         setProducts(data.data);
         setTotalPages(data.totalPages);
         setLoading(false);
-        console.log(data)
       } catch (error) {
         console.error('Error:', error.message);
         setLoading(false);
@@ -48,9 +47,6 @@ const ProductsListContainer = ({ theme }) => {
         </button>
       );
     }
-
-    console.log(pageNumbers)
-
     return pageNumbers;
   };
 

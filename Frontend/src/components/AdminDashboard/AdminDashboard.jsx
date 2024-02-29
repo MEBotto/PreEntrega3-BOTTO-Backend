@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from './Sidebar/Sidebar';
 import ProductsAdmin from './ProductsAdmin/ProductsAdmin';
+import UsersAdmin from './UsersAdmin/UsersAdmin';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -23,10 +24,8 @@ const AdminDashboard = () => {
           navigate('/products');
           return;
         }
-
         // Aquí maneja la respuesta exitosa (status 200)
         const data = await response.json();
-        console.log(data);
       } catch (error) {
         console.error('Error:', error.message);
       }
@@ -38,7 +37,11 @@ const AdminDashboard = () => {
   return (
     <>
       <Sidebar/>
-      <ProductsAdmin token={token}/>
+      <Routes>
+        <Route path='/users' element={<UsersAdmin token={token}/>}/>
+        <Route path='/products' element={<ProductsAdmin token={token}/>}/>
+      </Routes>
+    
     </>
   )
 }

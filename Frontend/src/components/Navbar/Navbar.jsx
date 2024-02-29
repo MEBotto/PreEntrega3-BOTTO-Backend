@@ -12,8 +12,8 @@ function NavbarExport({ theme, setTheme }) {
   };
 
   useEffect(() => {
-    console.log('Token:', token);
-    console.log(user);
+    // console.log('Token:', token);
+    // console.log(user);
   }, [token]);
 
   const menuOnClick = () => {
@@ -36,10 +36,10 @@ function NavbarExport({ theme, setTheme }) {
           <li className='active'><Link to='/'>Home</Link></li>
           <li><Link to='/products'>Manga</Link></li>
           <li><a href='#'>Comics</a></li>
-          <li><a href='#'>Contact</a></li>
+          {token && user.role !== "admin" ? <li><Link to={"/chat"}>Chat <i class="ri-chat-3-line"></i></Link></li> : <></>}
           {user?.role ? (
             user.role === 'admin' ? (
-            <li><Link to='/admin'>Admin Panel</Link></li>
+            <li><Link to='/admin/products'>Admin Panel</Link></li>
             ) : (
             <></>
             )

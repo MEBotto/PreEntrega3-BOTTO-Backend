@@ -11,14 +11,6 @@ export default class UserExtendRouter extends CustomRouter {
       res.sendSuccess(req.user) 
     });
 
-    this.get('/currentUser', ["USER", "USER_PREMIUN"], (req, res) => { 
-      res.sendSuccess(req.user) 
-    });
-
-    this.get('/premiun', ["USER_PREMIUN"], (req, res) => {
-      res.sendSuccess(req.user);
-    });
-
     this.get('/admin', ["ADMIN"], (req, res) => {
       res.sendSuccess(req.user);
     });
@@ -26,7 +18,7 @@ export default class UserExtendRouter extends CustomRouter {
     this.get('/admin/getUsers', ['ADMIN'], async (req, res) => {
       try {
         const userService = new UserService();
-        const allUsers = await userService.getAllUsers();
+        const allUsers = await userService.getAll();
         res.sendSuccess(allUsers);
       } catch (error) {
         console.error(error);

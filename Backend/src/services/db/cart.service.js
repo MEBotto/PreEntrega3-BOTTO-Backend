@@ -1,5 +1,7 @@
 import { productModel } from "./models/product.model.js";
 import { cartModel } from "./models/cart.model.js";
+import { ticketModel } from "./models/ticket.model.js";
+import { ObjectId } from "mongodb";
 
 //cart.controller
 export const getCarts = async () => {
@@ -97,3 +99,54 @@ export const deleteAllProductsFromCart = async(cartId) => {
   await cart.save();
   return cart;
 }
+
+export const purchaseCart = async (cartId, cartProducts, purchaserEmail) => {
+  try {
+    const failedProducts = [];
+    let totalAmount = 0;
+
+    // Recorre los productos en el carrito y verifica el stock
+    for (const cartProduct of cartProducts) {
+      const productIdObject = cartProduct._id;
+      const productId = productIdObject.toString()
+      const requestedQuantity = cartProduct.quantity;
+      console.log(productId)
+      const product = await productModel.findById(productId);
+      console.log(product)
+
+      // Verifica si hay suficiente stock
+      if (product.stock >= requestedQuantity) {
+        // Calcula el monto total
+        totalAmount += product.price * requestedQuantity;
+
+        // Resta la cantidad del stock del producto
+        product.stock -= requestedQuantity;
+        await product.save();
+      } else {
+        // Si no hay suficiente stock, agrega el producto a la lista de productos fallidos
+        failedProducts.push({ productId, requestedQuantity });
+      }
+    }
+
+    // Si se compraron productos, crea un ticket
+    if (totalAmount > 0) {
+      const ticketData = {
+        amount: totalAmount,
+        purchaser: purchaserEmail,
+      };
+
+      const ticket = await ticketModel.create(ticketData);
+
+      // Aquí puedes agregar lógica adicional para asociar el ticket al usuario, etc.
+
+      return { failedProducts, ticketId: ticket._id };
+    } else {
+      // Si no se compraron productos, solo devuelve los productos fallidos
+      return { failedProducts };
+    }
+  } catch (error) {
+    // Manejo de errores, puedes lanzar una excepción o retornar un objeto de error
+    console.log("Error in purchaseCart function:", error);
+    throw new Error("Error processing the purchase.", error);
+  }
+};

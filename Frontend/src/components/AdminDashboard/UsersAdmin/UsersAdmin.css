@@ -1,6 +1,6 @@
 /* ProductsAdmin.css */
 
-.products-main-container {
+.users-main-container {
   background: var(--bg-color);
   height: 100%;
   width: calc(100vw - 90px);

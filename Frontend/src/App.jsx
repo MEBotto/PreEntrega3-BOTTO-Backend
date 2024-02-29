@@ -10,6 +10,7 @@ import Login from './components/Login/Login.jsx';
 import Profile from './components/Profile/Profile.jsx';
 import Register from './components/Register/Register.jsx';
 import AdminDashboard from './components/AdminDashboard/AdminDashboard.jsx';
+import Chat from './components/Chat/Chat.jsx';
 
 function App() {
   const current_theme = localStorage.getItem('current_theme');
@@ -36,7 +37,7 @@ function App() {
           <Routes>
             <Route path='/login' element={<Login onLogin={login}/>}/>
             <Route path='/register' element={<Register/>}/>
-            <Route path='/admin' element={<AdminDashboard/>}/>
+            <Route path='/admin/*' element={<AdminDashboard/>}/>
             <Route
             path='/'
             element={
@@ -46,6 +47,7 @@ function App() {
               </>
             }
           >
+            <Route path='/chat' element={<Chat/>} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/product/add' element={<ProductForm />} />
             <Route path='/products' element={<ProductsListContainer theme={theme} />} />

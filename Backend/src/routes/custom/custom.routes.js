@@ -89,18 +89,6 @@ export default class CustomRouter {
 
     const token = authHeader.split(' ')[1]//Se hace el split para retirar la palabra Bearer.
 
-    // //The JWT token is stored in the authorization headers:
-    // let cookieToken = null;
-    // if (req && req.cookies) {
-    //   cookieToken = req.cookies['jwtCookieToken'];
-    // } else {
-    //   return res.status(403).send({ error: "User not authenticated or missing token." })
-    // }
-
-    // if (!cookieToken) {
-    //   return res.status(403).send({ error: "User not authenticated or missing token." })
-    // }
-
     jwt.verify(token, PRIVATE_KEY, (error, credential) => {
       if (error) return res.status(401).send({ error: "Invalid Token, unauthorized!", erro: error });
       //Token OK
