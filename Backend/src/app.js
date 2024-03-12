@@ -6,6 +6,7 @@ import { Server } from "socket.io";
 import cors from "cors";
 import __dirname from "./utils.js";
 import cartRouter from "./routes/carts.routes.js";
+import emailRouter from "./routes/email.routes.js"
 import {createMessage} from "./services/db/message.service.js";
 import githubLoginRouter from "./routes/github-login.views.routes.js"
 import UserExtendRouter from "./routes/custom/users.extend.routes.js";
@@ -124,6 +125,7 @@ app.use(express.static(`${__dirname}/public`));
 
 // Rutas
 app.use("/api/carts", cartRouter);
+app.use("/api/email", emailRouter);
 app.use("/github", githubLoginRouter);
 
 // Custom Router

@@ -38,10 +38,9 @@ export const postCartPurchase = async (req, res) => {
     const cartProducts = await getProductsFromCart(cartId);
     // Lógica para verificar el stock y realizar la compra
     const result = await purchaseCart(cartId, cartProducts.products, email);
-    console.log(result)
     // Si hay productos que no se pudieron procesar, actualizar el carrito
     if (result.failedProducts.length > 0) {
-      await deleteCart(cartId);
+      await deleteAllProductsFromCart(cartId);
       res.status(200).json({ 
         message: "Purchase completed with some products not processed successfully.",
         failedProducts: result.failedProducts
