@@ -6,8 +6,7 @@ import { Server } from "socket.io";
 import cors from "cors";
 import __dirname from "./utils.js";
 import cartRouter from "./routes/carts.routes.js";
-import emailRouter from "./routes/email.routes.js"
-import {createMessage} from "./services/db/message.service.js";
+import { messageService } from "./services/factory.js";
 import githubLoginRouter from "./routes/github-login.views.routes.js"
 import UserExtendRouter from "./routes/custom/users.extend.routes.js";
 import ProductExtendRouter from "./routes/custom/products.extend.routes.js";
@@ -81,7 +80,7 @@ io.on('connection', (socket) => {
   socket.on('chat message', async (data) => {
     try {
       console.log(data)
-      await createMessage(data.user, data.message);
+      await messageService.save(data.user, data.message);
       io.emit('chat message', data);
     } catch (error) {
       console.error(error);
@@ -125,7 +124,6 @@ app.use(express.static(`${__dirname}/public`));
 
 // Rutas
 app.use("/api/carts", cartRouter);
-app.use("/api/email", emailRouter);
 app.use("/github", githubLoginRouter);
 
 // Custom Router
@@ -136,4 +134,4 @@ app.use("/api/extend/products", productExtendRouter.getRouter());
 const messageExtendRouter = new MessageExtendRouter();
 app.use("/api/extend/messages", messageExtendRouter.getRouter());
 const cartExtendRouter = new CartExtendRouter();
-app.use("api/extend/carts", cartExtendRouter.getRouter());
+app.use("/api/extend/carts", cartExtendRouter.getRouter());

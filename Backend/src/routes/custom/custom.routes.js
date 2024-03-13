@@ -80,8 +80,7 @@ export default class CustomRouter {
 
     //El JWT token se guarda en los headers de autorización.
     const authHeader = req.headers.authorization;
-    console.log("Token present in header auth:");
-    console.log(authHeader);
+
 
     if (!authHeader) {
         return res.status(401).send({ error: "User not authenticated or missing token." });
@@ -97,7 +96,6 @@ export default class CustomRouter {
       if (!policies.includes(user.role.toUpperCase())) return res.status(401).send({ error: "This user doesn't have the required privileges, verify your roles!" });
       //If the user.role is within policies, you can enter
       req.user = user;
-      console.log(req.user);
       next();
     })
   }

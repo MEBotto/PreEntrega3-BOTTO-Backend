@@ -113,9 +113,7 @@ export default class CartDAO {
         const productIdObject = cartProduct._id;
         const productId = productIdObject.toString()
         const requestedQuantity = cartProduct.quantity;
-        console.log(productId)
         const product = await productModel.findById(productId);
-        console.log(product)
   
         // Verifica si hay suficiente stock
         if (product.stock >= requestedQuantity) {
@@ -142,14 +140,14 @@ export default class CartDAO {
   
         // Aquí puedes agregar lógica adicional para asociar el ticket al usuario, etc.
   
-        return { failedProducts, ticketId: ticket._id };
+        return { failedProducts, ticketId: ticket._id, ticket };
       } else {
         // Si no se compraron productos, solo devuelve los productos fallidos
         return { failedProducts };
       }
     } catch (error) {
       // Manejo de errores, puedes lanzar una excepción o retornar un objeto de error
-      console.log("Error in purchaseCart function:", error);
+      console.error("Error in purchaseCart function:", error);
       throw new Error("Error processing the purchase.", error);
     }
   };

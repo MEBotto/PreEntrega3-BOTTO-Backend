@@ -15,9 +15,6 @@ export default class UserDAO {
     return result;
   };
   update = async (filter, value) => {
-    console.log("Update user with filter and value:");
-    console.log(filter);
-    console.log(value);
     let result = await userModel.updateOne(filter, value);
     return result;
   }

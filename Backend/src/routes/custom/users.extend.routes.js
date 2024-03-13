@@ -1,12 +1,10 @@
 import CustomRouter from "./custom.routes.js";
-import UserService from "../../services/db/users.service.js";
+import { userService } from "../../services/factory.js";
 import { createHash, isValidPassword, generateJWToken, passportCall } from "../../utils.js";
 import passport from "passport";
 
 export default class UserExtendRouter extends CustomRouter {
   init(){
-    const userService = new UserService();
-
     this.get('/profile', ["USER", "USER_PREMIUN", "ADMIN"], (req, res) => {
       res.sendSuccess(req.user) 
     });
@@ -17,7 +15,6 @@ export default class UserExtendRouter extends CustomRouter {
 
     this.get('/admin/getUsers', ['ADMIN'], async (req, res) => {
       try {
-        const userService = new UserService();
         const allUsers = await userService.getAll();
         res.sendSuccess(allUsers);
       } catch (error) {
@@ -30,7 +27,7 @@ export default class UserExtendRouter extends CustomRouter {
       const { email, password } = req.body;
 
       try {
-        const user = await userService.findByUsername(email);
+        const user = await userService.getByUsername(email);
         if (!user) {
           console.warn("User doesn't exists with username: " + email);
           return res.status(202).send({ error: "Not found", message: "User not found wit email: " + email });

@@ -1,9 +1,9 @@
-import { getProducts, getProductByID, addProduct, updateProduct, deleteProduct } from "../services/db/product.service.js";
+import { productService } from "../services/factory.js";
 
 export const getProductController = async (req, res) => {
   try {
     const { limit, page, query, sort } = req.query;
-    const products = await getProducts(limit, page, query, sort);
+    const products = await productService.getAll(limit, page, query, sort);
     res.status(200).json({ data: products, message: "Products list!" });
   } catch (error) {
     res.status(400).json({ error, message: "error" });
@@ -13,7 +13,7 @@ export const getProductController = async (req, res) => {
 export const getProductByIDController = async (req, res) => {
   try {
     const { pid } = req.params
-    const product = await getProductByID(pid)
+    const product = await productService.getByID(pid)
     res.status(200).json({ data: product, message: "Product found!" });
   } catch (error) {
     res.status(400).json({ error, message: "error" });
@@ -22,7 +22,7 @@ export const getProductByIDController = async (req, res) => {
 
 export const postProductController = async (req, res) => {
   try { 
-    const product = await addProduct(req.body);
+    const product = await productService.save(req.body);
     res.status(200).json({ data: product, message: "Product created!" });
   } catch (error) {
     res.status(400).json({ error, message: "error" });
@@ -32,7 +32,7 @@ export const postProductController = async (req, res) => {
 export const putProductController = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await updateProduct(id, req.body);
+    const product = await productService.update(id, req.body);
     res.status(200).json({ data: product, message: "Product updated!" });
   } catch (error){
     res.status(400).json({ error, message: "error" });
@@ -42,7 +42,7 @@ export const putProductController = async (req, res) => {
 export const deleteProductController = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await deleteProduct(id);
+    const product = await productService.delete(id);
     res.status(200).json({ data: product, message: "Product deleted!" });
   } catch (error){
     res.status(400).json({ error, message: "error" });

@@ -7,7 +7,7 @@ export const program = new Command();
 program
   .option('-d', 'Variable para debug', false)
   .option('-p <port>', 'Puerto del servidor', 8080)
-  .option('--mode <mode>', 'Modo de trabajo', 'develop')
+  .option('--mode <mode>', 'Modo de trabajo', 'dev')
   .requiredOption('-u <user>', 'Usuario que va a utilizar el aplicativo.', 'User not declared.');
 program.parse();
 

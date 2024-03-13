@@ -5,7 +5,7 @@ const cartSchema = new Schema({
     product: { type: Schema.Types.ObjectId, ref: "Product" },
     quantity: { type: Number, required: true, default: 1 },
   }],
-  user: { type: Schema.Types.ObjectId, ref: "User" },
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
 })
 
 const cartModel = model("carts", cartSchema)

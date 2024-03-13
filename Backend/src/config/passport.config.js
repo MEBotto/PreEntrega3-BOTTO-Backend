@@ -2,7 +2,7 @@ import passport from "passport";
 import passportLocal from "passport-local";
 import GitHubStrategy from "passport-github2";
 import jwtStrategy from "passport-jwt";
-import userModel from "../services/db/models/user.model.js";
+import userModel from "../models/user.model.js";
 import { createHash, isValidPassword, PRIVATE_KEY } from "../utils.js";
 
 const localStrategy = passportLocal.Strategy;
@@ -17,8 +17,6 @@ const initializePassport = () => {
       callbackUrl: "http://localhost:8080/api/extend/users/githubcallback"
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log("Profile obtenido del usuario de GitHub: ");
-      console.log(profile);
       try {
         const user = await userModel.findOne({ email: profile._json.email });
         if (!user) {
