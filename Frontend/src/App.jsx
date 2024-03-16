@@ -8,7 +8,7 @@ import ProductsListContainer from "./components/ProductsContainer/ProductsListCo
 import ProductForm from "./components/Forms/ProductForm.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Profile from "./components/Profile/Profile.jsx";
-import Register from "./components/Register/Register.jsx";
+import Register from "./pages/Register/Register.jsx";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx";
 import Chat from "./components/Chat/Chat.jsx";
 
