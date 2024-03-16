@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { jwtDecode } from "jwt-decode";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import "./Login.css";
+import { useAuth } from "../../components/context/AuthContext.jsx";
+import FormLogin from "../../components/Forms/FormLogin.jsx";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -64,32 +64,9 @@ const Login = () => {
   }
 
   return (
-    <>
-      <div className="h-screen w-screen flex justify-center items-center">
-        <h2 className="text-center">Login</h2>
-        <div className="input-box">
-          <input
-            type="text"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="input-box">
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="input-box">
-          <input type="submit" value={"Sign in"} onClick={handleLogin} />
-        </div>
-        <div className="links">
-          <a href="#">Forget Password</a>
-          <Link to={"/register"}>Signup</Link>
-        </div>
-      </div>
-    </>
+    <div className="h-screen w-screen my-auto flex justify-center items-center">
+      <FormLogin />
+    </div>
   );
 };
 

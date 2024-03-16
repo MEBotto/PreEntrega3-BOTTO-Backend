@@ -1,9 +1,10 @@
-const Button = ({ text, bg, className, onClickFunction, iconName }) => {
+const Button = ({ text, bg, className, onClickFunction, iconName, type }) => {
   return (
     <>
       <button
+        type={type ? type : undefined}
         onClick={onClickFunction}
-        className={`btn ${className}`}
+        className={`my-1 ${className}`}
         style={{ background: bg }}
       >
         <span className="bg-transparent">

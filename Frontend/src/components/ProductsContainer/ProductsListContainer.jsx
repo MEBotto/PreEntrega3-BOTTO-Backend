@@ -1,4 +1,3 @@
-import './ProductsListContainer.css'
 import React from 'react'
 import ProductsList from './ProductsList/ProductsList.jsx'
 import { useState, useEffect } from 'react';
