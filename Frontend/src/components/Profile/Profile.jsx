@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -8,18 +8,20 @@ const Profile = () => {
   useEffect(() => {
     // Verificar si hay un token antes de realizar la solicitud
     if (token) {
-      fetch('http://localhost:8080/api/extend/users/profile', {
-        method: 'GET',
+      fetch("http://localhost:8080/api/extend/users/profile", {
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
-      .then(response => response.json())
-      .then(data => {
-        // Actualizar el estado con los datos del usuario
-        setUserData(data.payload);
-      })
-      .catch(error => console.error('Error al obtener datos del usuario:', error));
+        .then((response) => response.json())
+        .then((data) => {
+          // Actualizar el estado con los datos del usuario
+          setUserData(data.payload);
+        })
+        .catch((error) =>
+          console.error("Error al obtener datos del usuario:", error)
+        );
     }
   }, [token]);
 

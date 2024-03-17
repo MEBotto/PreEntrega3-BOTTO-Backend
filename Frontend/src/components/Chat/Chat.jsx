@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import io from 'socket.io-client';
+import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext.jsx";
+import io from "socket.io-client";
 
 const Chat = () => {
   const { token, user } = useAuth();
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
-  const socket = io('http://localhost:8080'); // Reemplaza 'PORT' con el puerto donde está corriendo tu servidor
+  const [newMessage, setNewMessage] = useState("");
+  const socket = io("http://localhost:8080"); // Reemplaza 'PORT' con el puerto donde está corriendo tu servidor
 
   useEffect(() => {
     // Conexión al socket cuando el componente se monta
     socket.connect();
 
     // Escucha los mensajes del servidor
-    socket.on('chat message', (message) => {
+    socket.on("chat message", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
@@ -25,23 +25,23 @@ const Chat = () => {
 
   useEffect(() => {
     // Obtener todos los mensajes al cargar la página
-    fetch('http://localhost:8080/api/extend/messages', {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`, // Asegúrate de incluir el token si es necesario
-        },
+    fetch("http://localhost:8080/api/extend/messages", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`, // Asegúrate de incluir el token si es necesario
+      },
     })
-    .then(response => response.json())
-    .then(data => setMessages(data.data))
-    .catch(error => console.error('Error fetching messages:', error));
-}, []);
+      .then((response) => response.json())
+      .then((data) => setMessages(data.data))
+      .catch((error) => console.error("Error fetching messages:", error));
+  }, []);
 
   const sendMessage = () => {
     // Envía el mensaje al servidor y emite el evento 'chat message'
-    socket.emit('chat message', { user: user.name, message: newMessage });
+    socket.emit("chat message", { user: user.name, message: newMessage });
 
     // Limpiar el input después de enviar el mensaje
-    setNewMessage('');
+    setNewMessage("");
   };
 
   return (

@@ -1,4 +1,13 @@
-const Button = ({ text, bg, className, onClickFunction, iconName, type }) => {
+const Button = ({
+  text,
+  bg,
+  className,
+  iSize,
+  iClass,
+  onClickFunction,
+  iconName,
+  type,
+}) => {
   return (
     <>
       <button
@@ -9,7 +18,9 @@ const Button = ({ text, bg, className, onClickFunction, iconName, type }) => {
       >
         <span className="bg-transparent">
           {iconName && (
-            <i className={`${iconName} bg-transparent text-xl mr-2`}></i>
+            <i
+              className={`${iconName} bg-transparent ${iSize ? iSize : "text-xl"} ${iClass} mr-2`}
+            ></i>
           )}
           {text}
         </span>

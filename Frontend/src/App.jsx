@@ -1,7 +1,8 @@
 import "boxicons";
 import "remixicon/fonts/remixicon.css";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import { AuthProvider } from "./components/context/AuthContext.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import ProductsListContainer from "./components/ProductsContainer/ProductsListContainer.jsx";
@@ -31,7 +32,7 @@ function App() {
   };
 
   return (
-    <>
+    <ThemeProvider>
       <AuthProvider>
         <BrowserRouter>
           <Routes>
@@ -58,7 +59,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </AuthProvider>
-    </>
+    </ThemeProvider>
   );
 }
 
