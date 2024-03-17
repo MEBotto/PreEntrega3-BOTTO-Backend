@@ -92,21 +92,27 @@ function Navbar() {
           id="navbar-dropdown"
         >
           <div className="flex items-center justify-end gap-4 mr-4">
-            <div className="flex gap-4">
-              <Button
-                text={"Log in"}
-                iconName={"ri-login-box-fill"}
-                className={"font-bold"}
-                iClass={"font-normal"}
-              />
-              <Button
-                text={"Sign In"}
-                className={`${
-                  theme === "dark"
-                    ? "bg-mainColor text-black"
-                    : "bg-mainColorLight text-white"
-                } p-2 rounded-xl font-bold`}
-              />
+            <div className="flex gap-4 items-center">
+              <Link to={"/login"}>
+                {" "}
+                <Button
+                  text={"Log in"}
+                  iconName={"ri-login-box-fill"}
+                  className={"font-bold"}
+                  iClass={"font-normal"}
+                />
+              </Link>
+              <Link to={"/register"}>
+                {" "}
+                <Button
+                  text={"Sign Up"}
+                  className={`${
+                    theme === "dark"
+                      ? "bg-mainColor text-black"
+                      : "bg-mainColorLight text-white"
+                  } p-2 rounded-xl font-bold`}
+                />
+              </Link>
             </div>
             <div>
               <Button
