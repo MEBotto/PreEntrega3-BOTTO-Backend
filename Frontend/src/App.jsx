@@ -5,9 +5,8 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar/Navbar.jsx";
-import ProductsListContainer from "./components/ProductsContainer/ProductsListContainer.jsx";
-import ProductForm from "./components/Forms/ProductForm.jsx";
 import Login from "./pages/Login/Login.jsx";
+import Products from "./pages/Products/Products.jsx";
 import Profile from "./components/Profile/Profile.jsx";
 import Register from "./pages/Register/Register.jsx";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx";
@@ -50,11 +49,7 @@ function App() {
             >
               <Route path="/chat" element={<Chat />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/product/add" element={<ProductForm />} />
-              <Route
-                path="/products"
-                element={<ProductsListContainer theme={theme} />}
-              />
+              <Route path="/products" element={<Products theme={theme} />} />
             </Route>
           </Routes>
         </BrowserRouter>
