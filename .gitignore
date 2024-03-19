@@ -25,3 +25,5 @@ Frontend/*.sw?
 
 #Back
 Backend/node_modules
+Backend/.env.production
+Backend/.env.development

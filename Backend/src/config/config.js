@@ -12,12 +12,11 @@ program
 program.parse();
 
 console.log("Modo Options: ", program.opts().mode);
-console.log("Remaining arguments: ", program.args);
 
 const environment = program.opts().mode;
 
 dotenv.config({
-  path: environment === "prod" ? "./src/config/.env.production" : "./src/config/.env.development"
+  path: environment === "prod" ? "./.env.production" : "./.env.development"
 });
 
 export default {

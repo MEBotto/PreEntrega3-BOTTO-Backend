@@ -10,7 +10,7 @@ import Products from "./pages/Products/Products.jsx";
 import Profile from "./components/Profile/Profile.jsx";
 import Register from "./pages/Register/Register.jsx";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx";
-import Chat from "./components/Chat/Chat.jsx";
+import Chat from "./pages/Chat/Chat.jsx";
 
 function App() {
   const current_theme = localStorage.getItem("current_theme");
