@@ -116,3 +116,12 @@ const getAccountByEmailController = async (req, res) => {
     res.status(400).json({ success: false, error: error.message, });
   }
 };
+
+export {
+  githubCallbackController,
+  googleCallbackController,
+  registerController,
+  loginController,
+  logoutController,
+  getAccountByEmailController,
+};
