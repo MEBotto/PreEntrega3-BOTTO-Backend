@@ -122,6 +122,5 @@ export {
   googleCallbackController,
   registerController,
   loginController,
-  logoutController,
   getAccountByEmailController,
 };
