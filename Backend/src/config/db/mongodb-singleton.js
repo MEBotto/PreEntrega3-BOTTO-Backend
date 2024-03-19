@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
-import config from "./config.js"
+import config from "../env.config.js";
 
 export default class MongoSingleton {
   static #instance;
 
-  constructor () {
+  constructor() {
     this.#connectMongoDB();
   }
 
   //Implementing Singleton
-  static getInstance () {
+  static getInstance() {
     if (this.#instance) {
       console.log("A connection to MongoDB has already been opened");
     } else {
@@ -26,5 +26,5 @@ export default class MongoSingleton {
       console.error("Failed to connect to DB using Mongoose: ", error);
       process.exit(error);
     }
-  }
+  };
 }

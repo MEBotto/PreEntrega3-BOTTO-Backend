@@ -7,41 +7,44 @@ import cors from "cors";
 import __dirname from "./utils.js";
 import cartRouter from "./routes/carts.routes.js";
 import { messageService } from "./services/factory.js";
-import githubLoginRouter from "./routes/github-login.views.routes.js"
+import githubLoginRouter from "./routes/github-login.views.routes.js";
 import UserExtendRouter from "./routes/custom/users.extend.routes.js";
 import ProductExtendRouter from "./routes/custom/products.extend.routes.js";
 import MessageExtendRouter from "./routes/custom/message.extend.routes.js";
 import CartExtendRouter from "./routes/custom/cart.extend.routes.js";
 import passport from "passport";
-import initializePassport from "./config/passport.config.js";
+import initializePassport from "./config/auth/passport.config.js";
 import cookieParser from "cookie-parser";
-import config from "./config/config.js";
-import program from "./config/config.js";
-import MongoSingleton from "./config/mongodb-singleton.js";
+import config from "./config/env.config.js";
+import program from "./config/env.config.js";
+import MongoSingleton from "./config/db/mongodb-singleton.js";
 
 const app = express();
 const PORT = config.port;
-const mongoURL = "mongodb+srv://marianobotto92:47pjMQKnnwIQOect@clustercoder.81upg7k.mongodb.net/?retryWrites=true&w=majority";
+const mongoURL =
+  "mongodb+srv://marianobotto92:47pjMQKnnwIQOect@clustercoder.81upg7k.mongodb.net/?retryWrites=true&w=majority";
 
 // CORS Options
 const corsOptions = {
   origin: `http://localhost:5173`,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
 };
 app.use(cors(corsOptions));
 
 // Configuración de Session
-app.use(session({
-  store: MongoStore.create({
-    mongoUrl: mongoURL,
-    ttl: 10 * 60
-  }),
-  secret: "v5h2Lor01Nu0",
-  resave: false,
-  saveUninitialized: true
-}));
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl: mongoURL,
+      ttl: 10 * 60,
+    }),
+    secret: "v5h2Lor01Nu0",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // Inicialización Passport
 initializePassport();
@@ -60,31 +63,31 @@ const mongoInstance = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 mongoInstance();
 
 // Configuración de Socket.IO
 const io = new Server(httpServer, {
   cors: {
     origin: "http://localhost:5173",
-    methods: ["GET", "POST"]
-  }
+    methods: ["GET", "POST"],
+  },
 });
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {
   console.log("A user connected");
 
-  socket.on('disconnect', () => {
+  socket.on("disconnect", () => {
     console.log("A user disconnected");
   });
 
-  socket.on('chat message', async (data) => {
+  socket.on("chat message", async (data) => {
     try {
-      console.log(data)
+      console.log(data);
       await messageService.save(data.user, data.message);
-      io.emit('chat message', data);
+      io.emit("chat message", data);
     } catch (error) {
       console.error(error);
-      socket.emit('error', { error: 'Error in chat message event' });
+      socket.emit("error", { error: "Error in chat message event" });
     }
   });
 });
@@ -102,8 +105,8 @@ const hbs = exphbs.create({
     allowProtoMethodsByDefault: true,
     allowProtoPropertiesByDefault: true,
   },
-  extname: 'hbs',
-  defaultLayout: 'main',
+  extname: "hbs",
+  defaultLayout: "main",
   helpers: {
     eq: function (a, b) {
       return a === b;
@@ -112,8 +115,8 @@ const hbs = exphbs.create({
       const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
       console.log(pageNumbers);
       return pageNumbers;
-    }
-  }
+    },
+  },
 });
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
