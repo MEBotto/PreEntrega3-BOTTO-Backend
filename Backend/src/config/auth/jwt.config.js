@@ -14,3 +14,5 @@ const JwtStrategy = new Strategy(
     }
   }
 );
+
+export default JwtStrategy;

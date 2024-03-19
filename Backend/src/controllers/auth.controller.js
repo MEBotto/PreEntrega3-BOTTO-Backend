@@ -99,8 +99,7 @@ const loginController = async (req, res) => {
 
     res.status(200).json({ success: true, jwt: access_token });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message,
-    });
+    res.status(400).json({ success: false, error: error.message });
   }
 };
 
@@ -111,9 +110,23 @@ const getAccountByEmailController = async (req, res) => {
     if (!account) {
       res.status(401).json({ success: false, message: "Invalid Credentials" });
     }
-    res.status(200).json({ success: true, data: account, });
+    res.status(200).json({ success: true, data: account });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message, });
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+const updateAccountController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const newValues = req.body;
+    const accountUpdated = await authService.updateAccount(id, newValues);
+    if (!accountUpdated) {
+      res.status(404).json({ success: false, message: "Account not found" });
+    }
+    res.status(200).json({ success: true, data: accountUpdated });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error })
   }
 };
 
@@ -123,4 +136,5 @@ export {
   registerController,
   loginController,
   getAccountByEmailController,
+  updateAccountController
 };
