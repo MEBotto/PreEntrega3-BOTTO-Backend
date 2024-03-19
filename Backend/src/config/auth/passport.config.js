@@ -4,7 +4,7 @@ import GitHubStrategy from "passport-github2";
 import jwtStrategy from "passport-jwt";
 import userModel from "../../models/user.model.js";
 import { createHash, isValidPassword } from "../../utils.js";
-import config from "../env.config.js";
+import { config } from "../env.config.js";
 
 const localStrategy = passportLocal.Strategy;
 const JWTStrategy = jwtStrategy.Strategy;

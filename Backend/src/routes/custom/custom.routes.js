@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import config from "../../config/env.config.js";
+import { config } from "../../config/env.config.js";
 
 const PRIVATE_KEY = config.jwtSecret;
 

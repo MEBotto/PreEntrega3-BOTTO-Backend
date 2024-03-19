@@ -15,7 +15,7 @@ import CartExtendRouter from "./routes/custom/cart.extend.routes.js";
 import passport from "passport";
 import initializePassport from "./config/auth/passport.config.js";
 import cookieParser from "cookie-parser";
-import config from "./config/env.config.js";
+import { config } from "./config/env.config.js";
 import program from "./config/env.config.js";
 import MongoSingleton from "./config/db/mongodb-singleton.js";
 

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import config from "../config/env.config.js"
+import { config } from "../config/env.config.js"
 
 export function checkUserRole(roles) {
   return (req, res, next) => {

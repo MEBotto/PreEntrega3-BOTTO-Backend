@@ -23,7 +23,7 @@ dotenv.config({
   path: environment === "prod" ? "./.env.production" : "./.env.development",
 });
 
-export default {
+export const config = {
   port: process.env.PORT,
   urlMongo: process.env.MONGO_URL,
   adminName: process.env.ADMIN_NAME,
