@@ -29,6 +29,9 @@ export const config = {
   adminName: process.env.ADMIN_NAME,
   adminPassword: process.env.ADMIN_PASSWORD,
   jwtSecret: process.env.JWT_SECRET,
+  githubClientID: process.env.GITHUB_CLIENT_ID,
+  githubSecret: process.env.GITHUB_SECRET,
+  githubCallbackURL: process.env.GITHUB_CALLBACK_URL
 };
 
 process.on("exit", (code) => {
