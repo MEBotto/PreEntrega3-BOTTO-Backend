@@ -3,8 +3,7 @@ import userModel from "../../../models/user.model.js";
 export default class AuthDAO {
   constructor() {}
   getAll = async () => {
-    let users = await userModel.find();
-    return users.map((user) => user.toObject());
+    return await userModel.find();
   };
   createAccount = async (user) => {
     return await userModel.create(user);

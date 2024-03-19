@@ -2,6 +2,15 @@ import { authService } from "../services/factory.js";
 import { createHash, isValidPassword } from "../utils/jwt.js";
 import { generateJWToken } from "../utils/jwt.js";
 
+const getAllUsersController = async (req, res) => {
+  try {
+    const users = authService.getAll();
+    res.status(200).json({ success: true, users: users });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
 const githubCallbackController = async (req, res) => {
   const user = req.user;
 
@@ -126,7 +135,7 @@ const updateAccountController = async (req, res) => {
     }
     res.status(200).json({ success: true, data: accountUpdated });
   } catch (error) {
-    res.status(400).json({ success: false, error: error })
+    res.status(400).json({ success: false, error: error });
   }
 };
 
@@ -136,5 +145,6 @@ export {
   registerController,
   loginController,
   getAccountByEmailController,
-  updateAccountController
+  updateAccountController,
+  getAllUsersController
 };

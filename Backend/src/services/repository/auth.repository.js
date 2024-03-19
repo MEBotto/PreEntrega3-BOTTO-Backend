@@ -3,6 +3,10 @@ export default class AuthRepository {
     this.dao = dao;
   }
 
+  getAll = async () => {
+    return await this.dao.getAll();
+  }
+
   createAccount = async (account) => {
     return await this.dao.createAccount(account);
   };
