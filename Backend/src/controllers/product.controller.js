@@ -1,4 +1,7 @@
 import { productService } from "../services/factory.js";
+import CustomError from "../services/errors/CustomError.js";
+import { generateProductErrorInfo } from "../services/errors/infoError.js"
+import { EErrors } from "../services/errors/enumsError.js"
 
 export const getProductController = async (req, res) => {
   try {
@@ -21,11 +24,30 @@ export const getProductByIDController = async (req, res) => {
 };
 
 export const postProductController = async (req, res) => {
+  const productReq = req.body;
   try { 
-    const product = await productService.save(req.body);
+    if (
+      productReq.title === undefined ||
+      productReq.description === undefined ||
+      productReq.price === undefined ||
+      productReq.thumbnail === undefined ||
+      productReq.code === undefined ||
+      productReq.stock === undefined
+    ) {
+      CustomError.createError({
+        name: "Product creation error",
+        cause: generateProductErrorInfo(productReq),
+        message:
+          "Product cannot be created. Please see your console for details.",
+        code: EErrors.MISSING_PROPERTY_ERROR,
+      });
+    }
+
+    const product = await productService.save(productReq);
     res.status(200).json({ data: product, message: "Product created!" });
   } catch (error) {
-    res.status(400).json({ error, message: "error" });
+    console.error(error.cause)
+    res.status(400).json({ error: error.name, message: error.message, code: error.code });
   }
 };
 
