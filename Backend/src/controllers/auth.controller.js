@@ -1,5 +1,5 @@
 import { authService } from "../services/factory.js";
-import { createHash, isValidPassword } from "../utils/jwt.js";
+import { createHash, isValidPassword } from "../utils/bcrypt.js";
 import { generateJWToken } from "../utils/jwt.js";
 
 const getAllUsersController = async (req, res) => {

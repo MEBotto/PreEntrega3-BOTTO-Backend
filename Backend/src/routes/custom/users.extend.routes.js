@@ -1,5 +1,5 @@
 import CustomRouter from "./custom.routes.js";
-import { userService } from "../../services/factory.js";
+import { authService } from "../../services/factory.js";
 import {
   createHash,
   isValidPassword,

@@ -17,4 +17,4 @@ const authDao = new AuthDAO();
 export const cartService = new CartRepository(cartDao);
 export const productService = new ProductRepository(productDao);
 export const messageService = new MessageRepository(messageDao);
-export const authService = new AuthRepository(userDao);
+export const authService = new AuthRepository(authDao);
