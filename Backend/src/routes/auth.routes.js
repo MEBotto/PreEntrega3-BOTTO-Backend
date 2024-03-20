@@ -42,7 +42,7 @@ authRouter.get(
   "/github/callback",
   passport.authenticate(GitHubStrategy, {
     session: false,
-    failureRedirect: "http://localhost:5173",
+    failureRedirect: "http://localhost:5173/login",
     failureFlash: true,
   }),
   githubCallbackController

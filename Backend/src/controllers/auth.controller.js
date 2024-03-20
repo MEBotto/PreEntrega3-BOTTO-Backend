@@ -13,6 +13,7 @@ const getAllUsersController = async (req, res) => {
 
 const githubCallbackController = async (req, res) => {
   const user = req.user;
+  console.log(user)
 
   const tokenGitHubUser = {
     first_name: user.first_name,
@@ -25,7 +26,10 @@ const githubCallbackController = async (req, res) => {
 
   const access_token = generateJWToken(tokenGitHubUser);
 
-  res.status(200).json({ jwt: access_token });
+  res.cookie("access_token", access_token, {
+    httpOnly: false,
+    maxAge: 8 * 60 * 60 * 1000,
+  });
 
   res.redirect("http://localhost:5173/");
 };

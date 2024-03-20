@@ -6,11 +6,11 @@ const GitHubStrategy = new Strategy(
   {
     clientID: config.githubClientID,
     clientSecret: config.githubSecret,
-    callbackURL: config.githubCallbackURL
+    callbackURL: config.githubCallbackURL,
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      let user = await authServices.getAccountByGitHubId(profile._json.id);
+      let user = await authService.getAccountByGitHubId(profile._json.id);
       if (!user) {
         let newUser = {
           first_name: profile._json.name,
@@ -26,9 +26,10 @@ const GitHubStrategy = new Strategy(
         done(null, user);
       }
     } catch (error) {
-      done(null, false);
+      done(error);
+      console.log(error);
     }
   }
-)
+);
 
 export default GitHubStrategy;
