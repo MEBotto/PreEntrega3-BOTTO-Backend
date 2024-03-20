@@ -1,6 +1,5 @@
 // Importing Express and related modules
 import express from "express";
-import exphbs from "express-handlebars";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import passport from "passport";
@@ -86,7 +85,6 @@ io.on("connection", (socket) => {
 
   socket.on("chat message", async (data) => {
     try {
-      console.log(data);
       await messageService.save(data.user, data.message);
       io.emit("chat message", data);
     } catch (error) {
@@ -102,29 +100,6 @@ app.use(express.urlencoded({ extended: true }));
 
 //Cookie Parser
 app.use(cookieParser());
-
-// Configuración de Handlebars
-const hbs = exphbs.create({
-  runtimeOptions: {
-    allowProtoMethodsByDefault: true,
-    allowProtoPropertiesByDefault: true,
-  },
-  extname: "hbs",
-  defaultLayout: "main",
-  helpers: {
-    eq: function (a, b) {
-      return a === b;
-    },
-    getPageNumbers: function (totalPages) {
-      const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-      console.log(pageNumbers);
-      return pageNumbers;
-    },
-  },
-});
-app.engine("hbs", hbs.engine);
-app.set("view engine", "hbs");
-app.set("views", `${__dirname}/views`);
 
 // Configuración de archivos estáticos
 app.use(express.static(`${__dirname}/public`));
