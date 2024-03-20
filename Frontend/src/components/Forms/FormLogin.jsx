@@ -13,6 +13,10 @@ const FormLogin = ({ t }) => {
     console.log(data);
   };
 
+  const handleGithubLogin = async () => {
+    window.location.href = "http://localhost:8080/api/auth/github";
+  };
+
   return (
     <form
       className="flex flex-col justify-center"
@@ -87,6 +91,7 @@ const FormLogin = ({ t }) => {
             : "bg-mainColorLight text-white"
         } rounded-3xl font-bold py-2 px-5`}
         iconName="ri-github-fill"
+        onClickFunction={handleGithubLogin}
       />
     </form>
   );
