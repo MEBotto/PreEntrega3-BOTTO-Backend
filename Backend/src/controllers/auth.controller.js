@@ -27,7 +27,7 @@ const githubCallbackController = async (req, res) => {
 
   res.status(200).json({ jwt: access_token });
 
-  res.redirect("http://localhost:5173/products");
+  res.redirect("http://localhost:5173/");
 };
 
 const googleCallbackController = async (req, res) => {
@@ -146,5 +146,5 @@ export {
   loginController,
   getAccountByEmailController,
   updateAccountController,
-  getAllUsersController
+  getAllUsersController,
 };

@@ -15,6 +15,8 @@ import {
 import { Router } from "express";
 import passport from "passport";
 
+import { checkUserRole } from "../middlewares/hasPermissionsMiddleware.js";
+
 passport.use(GitHubStrategy);
 passport.use(JwtStrategy);
 //passport.use(GoogleStrategy);
@@ -69,4 +71,6 @@ authRouter.get("/user/:email", getAccountByEmailController);
 
 authRouter.put("/user/:id", updateAccountController);
 
-authRouter.get("/users", getAllUsersController);
+authRouter.get("/users", checkUserRole(["ADMIN"]), getAllUsersController);
+
+export default authRouter;

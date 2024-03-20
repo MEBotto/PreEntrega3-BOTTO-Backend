@@ -1,23 +1,27 @@
-import express from "express";
-import exphbs from "express-handlebars";
-import session from "express-session";
-import MongoStore from "connect-mongo";
-import { Server } from "socket.io";
-import cors from "cors";
-import __dirname from "./utils.js";
-import cartRouter from "./routes/carts.routes.js";
-import { messageService } from "./services/factory.js";
-import githubLoginRouter from "./routes/github-login.views.routes.js";
-import UserExtendRouter from "./routes/custom/users.extend.routes.js";
-import ProductExtendRouter from "./routes/custom/products.extend.routes.js";
-import MessageExtendRouter from "./routes/custom/message.extend.routes.js";
-import CartExtendRouter from "./routes/custom/cart.extend.routes.js";
-import passport from "passport";
-import initializePassport from "./config/auth/passport.config.js";
+// Importing Express and related modules
+import express from "express"; 
+import exphbs from "express-handlebars"; 
+import cors from "cors"; 
 import cookieParser from "cookie-parser";
-import { config } from "./config/env.config.js";
-import program from "./config/env.config.js";
-import MongoSingleton from "./config/db/mongodb-singleton.js";
+import passport from "passport"; 
+import { Server } from "socket.io"; 
+
+// Application configurations and utilities
+import { config } from "./config/env.config.js"; 
+import program from "./config/env.config.js"; 
+import MongoSingleton from "./config/db/mongodb-singleton.js"; 
+import __dirname from "./utils.js"; 
+import initializePassport from "./config/auth/passport.config.js"; 
+
+// Routers and services
+import cartRouter from "./routes/carts.routes.js"; 
+import authRouter from "./routes/auth.routes.js"; 
+import UserExtendRouter from "./routes/custom/users.extend.routes.js"; 
+import ProductExtendRouter from "./routes/custom/products.extend.routes.js"; 
+import MessageExtendRouter from "./routes/custom/message.extend.routes.js"; 
+import CartExtendRouter from "./routes/custom/cart.extend.routes.js"; 
+import { messageService } from "./services/factory.js"; 
+
 
 const app = express();
 const PORT = config.port;
@@ -32,19 +36,6 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 app.use(cors(corsOptions));
-
-// Configuración de Session
-app.use(
-  session({
-    store: MongoStore.create({
-      mongoUrl: mongoURL,
-      ttl: 10 * 60,
-    }),
-    secret: "v5h2Lor01Nu0",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
 
 // Inicialización Passport
 initializePassport();
@@ -127,7 +118,7 @@ app.use(express.static(`${__dirname}/public`));
 
 // Rutas
 app.use("/api/carts", cartRouter);
-app.use("/github", githubLoginRouter);
+app.use("/api/auth", authRouter);
 
 // Custom Router
 const userExtendRouter = new UserExtendRouter();
