@@ -18,7 +18,6 @@ import initializePassport from "./config/auth/passport.config.js";
 // Routers and services
 import cartRouter from "./routes/carts.routes.js";
 import authRouter from "./routes/auth.routes.js";
-import UserExtendRouter from "./routes/custom/users.extend.routes.js";
 import ProductExtendRouter from "./routes/custom/products.extend.routes.js";
 import MessageExtendRouter from "./routes/custom/message.extend.routes.js";
 import CartExtendRouter from "./routes/custom/cart.extend.routes.js";
@@ -135,8 +134,6 @@ app.use("/api/carts", cartRouter);
 app.use("/api/auth", authRouter);
 
 // Custom Router
-const userExtendRouter = new UserExtendRouter();
-app.use("/api/extend/users", userExtendRouter.getRouter());
 const productExtendRouter = new ProductExtendRouter();
 app.use("/api/extend/products", productExtendRouter.getRouter());
 const messageExtendRouter = new MessageExtendRouter();
